@@ -9,7 +9,18 @@ def show
   @discount = Discount.find(params[:id])
 end
 
+def new
+
+end
+
 def create
+  discount = current_user.merchant.discounts.create(discount_params)
+  if discount.save
+      redirect_to '/merchant/discounts'
+  else
+    flash[:error] = "No fields can be left empty"
+      redirect_to '/merchant/discounts/new'
+  end
 end
 
 def edit
@@ -23,6 +34,6 @@ end
 
   private
     def discount_params
-      params.permit(:name, :percent_off)
+      params.permit(:name, :minimum_qty, :percent_off)
     end
 end
