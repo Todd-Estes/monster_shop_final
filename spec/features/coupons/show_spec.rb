@@ -16,7 +16,7 @@ describe "Coupons Show Page" do
                                               password: 'password')
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_user)
 
-    @coupon_1 = @merchant.coupons.create!(name: "Summer Deal 50%-Off", code: "50OFF", percent_off: 50)
+    @coupon_1 = @merchant_1.coupons.create!(name: "Summer Deal 50%-Off", code: "50OFF", percent_off: 50)
 
     visit '/'
     click_on 'Login'

@@ -16,8 +16,8 @@ describe 'As a merchant user' do
                                               password: 'password')
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_user)
 
-    @coupon_1 = @merchant.coupons.create!(name: "Summer Deal 50%-Off", code: "50OFF", percent_off: 50)
-    @coupon_2 = @merchant.coupons.create!(name: "Holiday Weekend 75%-Off", code: "75OFF", percent_off: 75, enabled: false)
+    @coupon_1 = @merchant_1.coupons.create!(name: "Summer Deal 50%-Off", code: "50OFF", percent_off: 50)
+    @coupon_2 = @merchant_1.coupons.create!(name: "Holiday Weekend 75%-Off", code: "75OFF", percent_off: 75, enabled: false)
 
     visit '/'
     click_on 'Login'
