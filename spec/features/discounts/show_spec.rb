@@ -16,22 +16,17 @@ describe "Discounts Show Page" do
                                               password: 'password')
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_user)
 
-    @discount_1 = @merchant_1.discounts.create!(name: "Summer Deal 50%-Off", percent_off: 50)
+    @discount_1 = @merchant_1.discounts.create!(name: "5% Off Twenty or More", minimum_qty: 20, percent_off: 0.05)
+    @discount_2 = @merchant_1.discounts.create!(name: "20% Off Five or More", minimum_qty: 5, percent_off: 0.20)
 
-    visit '/'
-    click_on 'Login'
-
-    fill_in 'Email Address', with: @merchant_user.email
-    fill_in 'Password', with: 'password'
-
-    click_button 'Login'
+    visit '/root'
   end
 
   it "can visit show page and see discount information" do
     visit "/merchant/discounts/#{@discount_1.id}"
 
-    expect(page).to have_content("#{@discount_1.id}")
-    expect(page).to have_content("#{@discount_1.code}")
-    expect(page).to have_content("#{@discount_1.percent_off}")
+    expect(page).to have_content("Discount ID: #{@discount_1.id}")
+    expect(page).to have_content("Minimum Quantity to Qualify: #{@discount_1.minimum_qty}")
+    expect(page).to have_content("Discount Percentage: #{@discount_1.percent_off}")
   end
 end

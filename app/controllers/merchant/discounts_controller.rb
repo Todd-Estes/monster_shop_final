@@ -6,6 +6,7 @@ def index
 end
 
 def show
+  @discount = Discount.find(params[:id])
 end
 
 def create
