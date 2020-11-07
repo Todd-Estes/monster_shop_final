@@ -1,4 +1,4 @@
-class Merchant::CouponsController < Merchant::BaseController
+class Merchant::DiscountsController < Merchant::BaseController
 
 def index
 end
@@ -19,7 +19,7 @@ def destroy
 end
 
   private
-    def coupon_params
-      params.permit(:name, :code, :percent_off)
+    def discount_params
+      params.permit(:name, :percent_off)
     end
 end
