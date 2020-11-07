@@ -1,6 +1,8 @@
 class Merchant::DiscountsController < Merchant::BaseController
 
 def index
+  @discounts = Discount.all
+  @merchant = Merchant.find_by(params[:merchant_id])
 end
 
 def show
