@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Destroy a Coupon' do
+describe 'Destroy a Discount' do
   before(:each) do
     @merchant_1 = Merchant.create(name: 'Bobs Exotics',
                                    address: '100 AE ST',
@@ -16,8 +16,8 @@ describe 'Destroy a Coupon' do
                                               password: 'password')
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_user)
 
-    @coupon_1 = @merchant_1.coupons.create!(name: "Summer Deal 50%-Off", code: "50OFF", percent_off: 50)
-    @coupon_2 = @merchant_1.coupons.create!(name: "Holiday Weekend 75%-Off", code: "75OFF", percent_off: 75, enabled: false)
+    @discount_1 = @merchant_1.discounts.create!(name: "Summer Deal 50%-Off", percent_off: 50)
+    @discount_1 = @merchant_1.discounts.create!(name: "Holiday Weekend 75%-Off", percent_off: 75)
 
     visit '/'
     click_on 'Login'
@@ -28,32 +28,31 @@ describe 'Destroy a Coupon' do
     click_button 'Login'
   end
 
-  describe "when I visit my coupons index view" do
+  describe "when I visit my discounts index view" do
     before(:each) do
       visit '/merchant'
 
-      click_on 'Manage Coupons'
+      click_on 'Manage Discounts'
   end
 
-  it 'can see a delete button next to each coupon'
-    within("#coupon-#{@coupon_1.id}") do
-      expect(page).to have_button("Delete Coupon")
+  it 'can see a delete button next to each discount'
+    within("#discount-#{@discount_1.id}") do
+      expect(page).to have_button("Delete Discount")
     end
 
-    within("#coupon-#{@coupon_2.id}") do
-      expect(page).to have_button("Delete Coupon")
+    within("#discount-#{@discount_2.id}") do
+      expect(page).to have_button("Delete Discount")
     end
   end
 
-  it 'can click coupon delete button and index page will be refreshed with
-  coupon gone' do
-    within("#coupon-#{@coupon_1.id}") do
-      expect(page).to have_button("Delete Coupon")
+  it 'can click discount delete button and index page will be refreshed with
+  discount gone' do
+    within("#discount-#{@discount_1.id}") do
+      expect(page).to have_button("Delete Discount")
     end
 
-    expect(current_path).to eq('merchant/coupons')
-    expect(current_path).to have_no_content("#{@coupon_1.name}")
-    expect(current_path).to have_no_content("#{@coupon_1.code}")
-    expect(current_path).to have_no_content("#{@coupon_1.percent_off}")
+    expect(current_path).to eq('merchant/discounts')
+    expect(current_path).to have_no_content("#{@discount_1.name}")
+    expect(current_path).to have_no_content("#{@discount_1.percent_off}")
   end
 end
