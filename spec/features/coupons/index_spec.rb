@@ -40,14 +40,14 @@ describe 'As a merchant user' do
       expect(page).to have_link("#{coupon_1.name}")
       expect(page).to content("#{coupon_1.code}")
       expect(page).to content("#{coupon_1.percent_off}%")
-      expect(page).to content("#{coupon_1.status}"
+      expect(page).to content("#{coupon_1.status}")
     end
 
       within("#coupon-#{@coupon_1.id}") do
         expect(page).to have_link("#{coupon_2.name}")
         expect(page).to content("#{coupon_2.code}")
         expect(page).to content("#{coupon_2.percent_off}%")
-        expect(page).to content("#{coupon_2.status}"
+        expect(page).to content("#{coupon_2.status}")
       end
    end
 
@@ -56,18 +56,15 @@ describe 'As a merchant user' do
 
       expect(current_path).to eq("merchant/#{coupon_1.id}")
    end
-
-   it "can see a delete button next to each coupon" do
-     within("#coupon-#{@coupon_1.id}") do
-       expect(page).to have_content("Delete Coupon")
-     end
-
-      within("#coupon-#{@coupon_1.id}") do
-        expect(page).to have_content("Delete Coupon")
-      end
-   end
-
-   it "can click delete button and "
-
-
+ end
 end
+
+   # it "can see a delete button next to each coupon" do
+   #   within("#coupon-#{@coupon_1.id}") do
+   #     expect(page).to have_content("Delete Coupon")
+   #   end
+   #
+   #    within("#coupon-#{@coupon_1.id}") do
+   #      expect(page).to have_content("Delete Coupon")
+   #    end
+   # end
