@@ -66,8 +66,6 @@ describe 'Discount Creation Form' do
       click_link("Create New Discount")
       click_button("Create Discount")
 
-      save_and_open_page
-
       expect(page).to have_content('No fields can be left empty')
       expect(current_path).to eq('/merchant/discounts/new')
 

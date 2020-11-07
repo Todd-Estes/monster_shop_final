@@ -16,16 +16,10 @@ describe 'Discount Edit Page' do
                                               password: 'password')
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_user)
 
-    @discount_1 = @merchant_1.discounts.create!(name: "Summer Deal 50%-Off", code: "50OFF", percent_off: 50)
-    @discount_2 = @merchant_1.discounts.create!(name: "Holiday Weekend 75%-Off", code: "75OFF", percent_off: 75, enabled: false)
+    @discount_1 = @merchant_1.discounts.create!(name: "5% Off Twenty or More", minimum_qty: 20, percent_off: 0.05)
+    @discount_2 = @merchant_1.discounts.create!(name: "20% Off Five or More", minimum_qty: 5, percent_off: 0.20)
 
-    visit '/'
-    click_on 'Login'
-
-    fill_in 'Email Address', with: @merchant_user.email
-    fill_in 'Password', with: 'password'
-
-    click_button 'Login'
+    visit '/root'
   end
 
   describe "when I visit my discounts index view" do
@@ -33,9 +27,9 @@ describe 'Discount Edit Page' do
       visit '/merchant'
 
       click_on 'Manage Discounts'
-  end
+    end
 
-  it 'can see an edit link next to each discount'
+  it 'can see an edit link next to each discount' do
     within("#discount-#{@discount_1.id}") do
       expect(page).to have_link("Edit Discount")
     end
@@ -50,11 +44,11 @@ describe 'Discount Edit Page' do
       click_link("Edit Discount")
     end
 
-    expect(current_path).to eq('merchant/discounts/edit')
+    expect(current_path).to eq("/merchant/discounts/#{@discount_1.id}/edit")
     expect(page).to have_content("Edit Discount")
-    expect(page).to have_field('Name', with: @discount_1.name)
-    expect(page).to have_field('Code', with: @discount_1.code)
-    expect(page).to have_field('Percent Off', with: @discount_1.discount)
+    expect(page).to have_field('name', with: "#{@discount_1.name}")
+    expect(page).to have_field('minimum_qty', with: "#{@discount_1.minimum_qty}")
+    expect(page).to have_field('percent_off', with: "#{@discount_1.percent_off}")
   end
 
   it 'can fill in a field with a valid input and submit changes' do
@@ -80,3 +74,4 @@ describe 'Discount Edit Page' do
     end
   end
 end
+ end
