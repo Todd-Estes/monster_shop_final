@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Coupons Show Page" do
+describe "Discounts Show Page" do
   before(:each) do
     @merchant_1 = Merchant.create(name: 'Bobs Exotics',
                                    address: '100 AE ST',
@@ -16,7 +16,7 @@ describe "Coupons Show Page" do
                                               password: 'password')
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_user)
 
-    @coupon_1 = @merchant_1.coupons.create!(name: "Summer Deal 50%-Off", code: "50OFF", percent_off: 50)
+    @discount_1 = @merchant_1.discounts.create!(name: "Summer Deal 50%-Off", percent_off: 50)
 
     visit '/'
     click_on 'Login'
@@ -27,11 +27,11 @@ describe "Coupons Show Page" do
     click_button 'Login'
   end
 
-  it "can visit show page and see coupon information" do
-    visit "/merchant/coupons/#{@coupon_1.id}"
+  it "can visit show page and see discount information" do
+    visit "/merchant/discounts/#{@discount_1.id}"
 
-    expect(page).to have_content("#{@coupon_1.id}")
-    expect(page).to have_content("#{@coupon_1.code}")
-    expect(page).to have_content("#{@coupon_1.percent_off}")
+    expect(page).to have_content("#{@discount_1.id}")
+    expect(page).to have_content("#{@discount_1.code}")
+    expect(page).to have_content("#{@discount_1.percent_off}")
   end
 end
