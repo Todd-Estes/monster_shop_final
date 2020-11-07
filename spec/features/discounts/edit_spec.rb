@@ -35,18 +35,18 @@ describe 'Discount Edit Page' do
       click_on 'Manage Discounts'
   end
 
-  it 'can see an edit link next to each coupon'
-    within("#coupon-#{@discount_1.id}") do
+  it 'can see an edit link next to each discount'
+    within("#discount-#{@discount_1.id}") do
       expect(page).to have_link("Edit Discount")
     end
 
-    within("#coupon-#{@discount_2.id}") do
+    within("#discount-#{@discount_2.id}") do
       expect(page).to have_link("Edit Discount")
     end
   end
 
-  it 'can click the edit link and be taken to the edit coupon view' do
-    within("#coupon-#{@discount_1.id}") do
+  it 'can click the edit link and be taken to the edit discount view' do
+    within("#discount-#{@discount_1.id}") do
       click_link("Edit Discount")
     end
 
@@ -58,7 +58,7 @@ describe 'Discount Edit Page' do
   end
 
   it 'can fill in a field with a valid input and submit changes' do
-    within("#coupon-#{@discount_1.id}") do
+    within("#discount-#{@discount_1.id}") do
       click_link("Edit Discount")
     end
 
@@ -66,8 +66,8 @@ describe 'Discount Edit Page' do
     click_on 'Update Discount'
   end
 
-  it 'can submit coupon changes and be redirected to coupon index where it can see edited coupon' do
-    within("#coupon-#{@discount_1.id}") do
+  it 'can submit discount changes and be redirected to discount index where it can see edited discount' do
+    within("#discount-#{@discount_1.id}") do
       click_link("Edit Discount")
     end
 
@@ -75,7 +75,7 @@ describe 'Discount Edit Page' do
     click_on 'Update Discount'
     expect(current_path).to eq('/merchant/discounts')
 
-    within("#coupon-#{@discount_1.id}") do
+    within("#discount-#{@discount_1.id}") do
       expect(page).to have_content('Black Friday Discount')
     end
   end
