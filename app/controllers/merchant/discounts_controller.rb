@@ -35,6 +35,9 @@ def update
 end
 
 def destroy
+  discount = Discount.find(params[:id])
+  discount.destroy
+  redirect_to "/merchant/discounts"
 end
 
   private
