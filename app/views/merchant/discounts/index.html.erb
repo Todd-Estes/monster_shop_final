@@ -1,0 +1,17 @@
+<h2><%= @merchant.name %> Discounts</h2>
+
+
+<ul>
+  <% @discounts.each do |discount| %>
+    <div id='discount-<%= discount.id %>'>
+      <li>Discount Name: <%= link_to "#{discount.name}", "/merchant/discounts/#{discount.id}" %>   <%= link_to "Edit Discount", "/merchant/discounts/#{discount.id}/edit" %></li>
+      <li>Minimum Quantity to Qualify:  <%= discount.minimum_qty %></li>
+      <li>Percent Off: <%= discount.percent_off %>%  </li><br>
+      <p><%= button_to "Delete Discount", "/merchant/discounts/#{discount.id}", method: :delete %></p>
+    </div>
+  <% end %>
+</ul>
+
+<p>
+  <%= link_to "Create New Discount", "/merchant/discounts/new" %>
+</p>

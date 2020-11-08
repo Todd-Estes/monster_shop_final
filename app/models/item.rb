@@ -29,4 +29,21 @@ class Item < ApplicationRecord
   def average_rating
     reviews.average(:rating)
   end
+
+  def find_discounts
+    merchant.discounts
+  end
+
+  def no_discounts?(quantity)
+    merchant.discounts.where("#{quantity} >= discounts.minimum_qty") == []
+  end
+
+  def highest_discount(quantity)
+    merchant.discounts.where("#{quantity} >= discounts.minimum_qty").order('discounts.percent_off DESC').first
+  end
+
+  def apply_discount(price, percentage)
+    total_discount = price * percentage
+    price - total_discount
+  end
 end

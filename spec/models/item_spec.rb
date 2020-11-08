@@ -26,6 +26,16 @@ RSpec.describe Item do
       @review_3 = @ogre.reviews.create(title: 'EW', description: 'This Ogre is Ew', rating: 1)
       @review_4 = @ogre.reviews.create(title: 'So So', description: 'This Ogre is So so', rating: 2)
       @review_5 = @ogre.reviews.create(title: 'Okay', description: 'This Ogre is Okay', rating: 4)
+
+      @merchant_user = @megan.users.create(name: 'Bob',
+                                                address: '100 AE ST',
+                                                city: 'Denver',
+                                                state: 'CO',
+                                                zip: 80218,
+                                                email: 'bob@example.com',
+                                                password: 'password')
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_user)
+
     end
 
     it '.sorted_reviews()' do
@@ -36,6 +46,32 @@ RSpec.describe Item do
 
     it '.average_rating' do
       expect(@ogre.average_rating.round(2)).to eq(3.00)
+    end
+
+    it '#find_discounts' do
+      discount_1 = @megan.discounts.create!(name: "5% Off Twenty or More", minimum_qty: 20, percent_off: 0.05)
+      discount_2 = @megan.discounts.create!(name: "20% Off Five or More", minimum_qty: 5, percent_off: 0.20)
+
+      expect(@ogre.find_discounts).to eq([discount_1, discount_2
+        ])
+    end
+
+    it '#no_discounts?' do
+      expect(@ogre.no_discounts?(1)).to eq(true)
+    end
+
+    it '#highest_discount' do
+      discount_1 = @megan.discounts.create!(name: "5% Off Twenty or More", minimum_qty: 20, percent_off: 0.05)
+      discount_2 = @megan.discounts.create!(name: "20% Off Five or More", minimum_qty: 5, percent_off: 0.20)
+      discount_3 = @megan.discounts.create!(name: "50% Off Five or More", minimum_qty: 15, percent_off: 0.50)
+
+      expect(@ogre.highest_discount(50)).to eq(discount_3)
+    end
+
+    it '#apply_discount' do
+      discount_2 = @megan.discounts.create!(name: "20% Off Five or More", minimum_qty: 5, percent_off: 0.20)
+
+      expect(@ogre.apply_discount(@ogre.price, discount_2.percent_off)).to eq(16)
     end
   end
 

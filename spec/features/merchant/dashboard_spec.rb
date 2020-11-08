@@ -19,6 +19,9 @@ RSpec.describe 'Merchant Dashboard' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@m_user)
     end
 
+
+
+
     it 'I can see my merchants information on the merchant dashboard' do
       visit '/merchant'
 
@@ -63,10 +66,10 @@ RSpec.describe 'Merchant Dashboard' do
       expect(current_path).to eq("/merchant/orders/#{@order_2.id}")
     end
 
-    it 'I can see a link to manage coupons' do
+    it 'I can see a link to manage discounts' do
       visit '/merchant'
-
-      expect(page).to have_link("Manage Coupons")
+    
+      expect(page).to have_link("Manage Discounts")
     end
   end
 end
