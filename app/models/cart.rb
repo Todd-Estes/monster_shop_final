@@ -18,6 +18,14 @@ class Cart
     @contents.values.sum
   end
 
+#   def items
+#   item_quantity = {}
+#   @contents.each do |item_id,quantity|
+#     item_quantity[Item.find(item_id)] = quantity
+#   end
+#   item_quantity
+# end
+
   def items
     @contents.map do |item_id, _|
       Item.find(item_id)

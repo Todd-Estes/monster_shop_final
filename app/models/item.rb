@@ -41,4 +41,9 @@ class Item < ApplicationRecord
   def highest_discount(quantity)
     merchant.discounts.where("#{quantity} >= discounts.minimum_qty").order('discounts.percent_off DESC').first
   end
+
+  def apply_discount(price, percentage)
+    total_discount = price * percentage
+    price - total_discount
+  end
 end
