@@ -61,7 +61,7 @@ describe 'Destroy a Discount' do
     within("#discount-#{@discount_1.id}") do
       click_button("Delete Discount")
     end
-    save_and_open_page
+    
     expect(current_path).to eq('/merchant/discounts')
     expect(current_path).to have_no_content("#{@discount_1.name}")
     expect(current_path).to have_no_content("#{@discount_1.percent_off}")
