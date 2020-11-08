@@ -37,6 +37,26 @@ RSpec.describe Item do
     it '.average_rating' do
       expect(@ogre.average_rating.round(2)).to eq(3.00)
     end
+
+    it '#find_discounts' do
+      discount_1 = @megan.discounts.create!(name: "5% Off Twenty or More", minimum_qty: 20, percent_off: 0.05)
+      discount_2 = @megan.discounts.create!(name: "20% Off Five or More", minimum_qty: 5, percent_off: 0.20)
+
+      expect(@ogre.find_discounts).to eq([discount_1, discount_2
+        ])
+    end
+
+    it '#no_discounts?' do
+      expect(@ogre.no_discounts?(1)).to eq(true)
+    end
+
+    it '#highest_discount' do
+      discount_1 = @megan.discounts.create!(name: "5% Off Twenty or More", minimum_qty: 20, percent_off: 0.05)
+      discount_2 = @megan.discounts.create!(name: "20% Off Five or More", minimum_qty: 5, percent_off: 0.20)
+      discount_3 = @megan.discounts.create!(name: "50% Off Five or More", minimum_qty: 15, percent_off: 0.50)
+
+      expect(@ogre.highest_discount(50)).to eq(discount_3)
+    end
   end
 
   describe 'Class Methods' do
