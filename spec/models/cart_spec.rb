@@ -12,6 +12,7 @@ RSpec.describe Cart do
         @ogre.id.to_s => 1,
         @giant.id.to_s => 2
         })
+
     end
 
     it '.contents' do
@@ -63,5 +64,12 @@ RSpec.describe Cart do
 
       expect(@cart.count_of(@giant.id)).to eq(1)
     end
+
+    it '.subtotal_with_discounts' do
+      discount_1 = @megan.discounts.create!(name: "5% Off Twenty or More", minimum_qty: 20, percent_off: 0.05)
+      discount_2 = @megan.discounts.create!(name: "20% Off Five or More", minimum_qty: 5, percent_off: 0.20)
+
+      expect(@cart.subtotal_with_discounts(@ogre, 5)).to eq(16)
+    end
+   end
   end
-end

@@ -52,8 +52,7 @@ RSpec.describe Item do
       discount_1 = @megan.discounts.create!(name: "5% Off Twenty or More", minimum_qty: 20, percent_off: 0.05)
       discount_2 = @megan.discounts.create!(name: "20% Off Five or More", minimum_qty: 5, percent_off: 0.20)
 
-      expect(@ogre.find_discounts).to eq([discount_1, discount_2
-        ])
+      expect(@ogre.find_discounts).to eq([discount_1, discount_2])
     end
 
     it '#no_discounts?' do
