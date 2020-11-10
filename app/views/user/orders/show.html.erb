@@ -14,7 +14,8 @@
     <p>Quantity: <%= order_item.quantity %></p>
     <p>Price: <%= number_to_currency(order_item.price) %></p>
       <% if !(order_item.item.no_discounts?(order_item.quantity)) %>
-        <p>Subtotal: <%= number_to_currency(order_item.item.apply_discount(order_item.subtotal, (order_item.item.highest_discount(order_item.quantity).percent_off)))  %></p>
+        <p>Adjusted Subtotal: <%= number_to_currency(order_item.item.apply_discount(order_item.subtotal, (order_item.item.highest_discount(order_item.quantity).percent_off)))  %></p>
+        <p><%= (order_item.item.highest_discount(order_item.quantity)).name%> discount applied!</p>
       <% else %>
         <p>Subtotal: <%= number_to_currency(order_item.subtotal) %></p>
       <% end %>

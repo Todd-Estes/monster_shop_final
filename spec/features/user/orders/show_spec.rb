@@ -82,5 +82,22 @@ RSpec.describe 'Order Show Page' do
       expect(@giant.inventory).to eq(5)
       expect(@ogre.inventory).to eq(7)
     end
+
+    it 'I can see an adjusted subtotal when I qualify for a discount' do
+      discount_1 = @megan.discounts.create!(name: "20% Off Two or More", minimum_qty: 2, percent_off: 0.20)
+      discount_2 = @megan.discounts.create!(name: "50% Off for Three", minimum_qty: 3, percent_off: 0.50)
+
+      visit "/profile/orders/#{@order_2.id}"
+
+      within "#order-item-#{@order_item_3.id}" do
+        expect(page).to have_content("Adjusted Subtotal: #{(number_to_currency((@order_item_3.subtotal) - ((@order_item_3.subtotal) * (@order_item_3.item.highest_discount(@order_item_3.quantity).percent_off))))}")
+        expect(page).to have_content("#{@order_item_3.item.highest_discount(@order_item_3.quantity).name} discount applied")
+      end
+
+      within "#order-item-#{@order_item_2.id}" do
+        expect(page).to have_content("Adjusted Subtotal: #{(number_to_currency((@order_item_2.subtotal) - ((@order_item_2.subtotal) * (@order_item_2.item.highest_discount(@order_item_2.quantity).percent_off))))}")
+        expect(page).to have_content("#{@order_item_2.item.highest_discount(@order_item_2.quantity).name} discount applied")
+      end
+    end
   end
 end
