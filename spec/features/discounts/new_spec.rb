@@ -36,7 +36,6 @@ describe 'Discount Creation Form' do
     it 'can click the Create New Discount link and be taken to New Discount form view' do
       click_link("Create New Discount")
 
-
       expect(current_path).to eq('/merchant/discounts/new')
       expect(page).to have_field('name')
       expect(page).to have_field('minimum_qty')
@@ -68,7 +67,6 @@ describe 'Discount Creation Form' do
 
       expect(page).to have_content('No fields can be left empty')
       expect(current_path).to eq('/merchant/discounts/new')
-
     end
   end
 end
