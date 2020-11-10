@@ -31,6 +31,9 @@ def update
   @discount.update(discount_params)
   if @discount.save
     redirect_to "/merchant/discounts"
+  else
+    flsah[:error] = "No fields can be left empty"
+    redirect_to '/merchant/discounts/'
   end
 end
 

@@ -3,10 +3,10 @@ require 'rails_helper'
 describe 'Destroy a Discount' do
   before(:each) do
     @merchant_1 = Merchant.create(name: 'Bobs Exotics',
-                                   address: '100 AE ST',
-                                   city: 'Denver',
-                                   state: 'CO',
-                                   zip: 80218)
+                                  address: '100 AE ST',
+                                  city: 'Denver',
+                                  state: 'CO',
+                                  zip: 80218)
     @merchant_user = @merchant_1.users.create(name: 'Bob',
                                               address: '100 AE ST',
                                               city: 'Denver',
@@ -27,16 +27,6 @@ describe 'Destroy a Discount' do
       visit '/merchant'
 
       click_on 'Manage Discounts'
-    end
-
-    it 'can see an edit link next to each discount' do
-      within("#discount-#{@discount_1.id}") do
-        expect(page).to have_link("Edit Discount")
-      end
-
-      within("#discount-#{@discount_2.id}") do
-        expect(page).to have_link("Edit Discount")
-      end
     end
 
     it 'can see a delete button next to each discount' do
