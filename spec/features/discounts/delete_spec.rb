@@ -29,7 +29,6 @@ describe 'Destroy a Discount' do
       click_on 'Manage Discounts'
     end
 
-
     it 'can see an edit link next to each discount' do
       within("#discount-#{@discount_1.id}") do
         expect(page).to have_link("Edit Discount")
@@ -40,31 +39,32 @@ describe 'Destroy a Discount' do
       end
     end
 
+    it 'can see a delete button next to each discount' do
+      within("#discount-#{@discount_1.id}") do
+        expect(page).to have_button("Delete Discount")
+      end
 
-
-
-
-
-
-  it 'can see a delete button next to each discount' do
-    within("#discount-#{@discount_1.id}") do
-      expect(page).to have_button("Delete Discount")
+      within("#discount-#{@discount_2.id}") do
+        expect(page).to have_button("Delete Discount")
+      end
     end
 
-    within("#discount-#{@discount_2.id}") do
-      expect(page).to have_button("Delete Discount")
+    it 'can click discount delete button and index page will be refreshed with
+    discount gone' do
+      within("#discount-#{@discount_1.id}") do
+        click_button("Delete Discount")
+      end
+
+      expect(current_path).to eq('/merchant/discounts')
+      expect(page).to have_no_content("#{@discount_1.name}")
+      expect(page).to have_no_content("#{@discount_1.percent_off}")
+
+      within("#discount-#{@discount_2.id}") do
+        click_button("Delete Discount")
+      end
+
+      expect(page).to have_no_content("#{@discount_2.name}")
+      expect(page).to have_no_content("#{@discount_2.percent_off}")
     end
   end
-
-  it 'can click discount delete button and index page will be refreshed with
-  discount gone' do
-    within("#discount-#{@discount_1.id}") do
-      click_button("Delete Discount")
-    end
-    
-    expect(current_path).to eq('/merchant/discounts')
-    expect(current_path).to have_no_content("#{@discount_1.name}")
-    expect(current_path).to have_no_content("#{@discount_1.percent_off}")
-  end
- end
 end

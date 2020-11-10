@@ -20,13 +20,6 @@ describe 'As a merchant user' do
     @discount_2 = @merchant_1.discounts.create!(name: "20% Off Five or More", minimum_qty: 5, percent_off: 0.20)
 
     visit '/root'
-
-    # click_on 'Login'
-    #
-    # fill_in 'Email Address', with: @merchant_user.email
-    # fill_in 'Password', with: 'password'
-    #
-    # click_button 'Login'
   end
 
   describe "when I visit my discounts index view" do
@@ -57,13 +50,3 @@ describe 'As a merchant user' do
    end
  end
 end
-
-   # it "can see a delete button next to each discount" do
-   #   within("#discount-#{@discount_1.id}") do
-   #     expect(page).to have_content("Delete Discount")
-   #   end
-   #
-   #    within("#discount-#{@discount_1.id}") do
-   #      expect(page).to have_content("Delete Discount")
-   #    end
-   # end

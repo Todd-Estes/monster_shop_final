@@ -24,7 +24,7 @@ describe "Discounts Show Page" do
 
   it "can visit show page and see discount information" do
     visit "/merchant/discounts/#{@discount_1.id}"
-
+    
     expect(page).to have_content("Discount ID: #{@discount_1.id}")
     expect(page).to have_content("Minimum Quantity to Qualify: #{@discount_1.minimum_qty}")
     expect(page).to have_content("Discount Percentage: #{@discount_1.percent_off}")
