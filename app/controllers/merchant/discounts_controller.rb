@@ -32,8 +32,8 @@ def update
   if @discount.save
     redirect_to "/merchant/discounts"
   else
-    flsah[:error] = "No fields can be left empty"
-    redirect_to '/merchant/discounts/'
+    flash[:error] = "No fields can be left empty"
+    redirect_to "/merchant/discounts/#{@discount.id}/edit"
   end
 end
 

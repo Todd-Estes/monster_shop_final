@@ -73,5 +73,17 @@ describe 'Discount Edit Page' do
       expect(page).to have_content('Black Friday Discount')
     end
   end
-end
+
+  it 'can leave a field empty and be redirected to edit page with an error message' do
+    within("#discount-#{@discount_1.id}") do
+      click_link("Edit Discount")
+    end
+
+    fill_in 'Name', with: ''
+    click_on 'Update Discount'
+    save_and_open_page
+   expect(current_path).to eq("/merchant/discounts/#{@discount_1.id}/edit")
+   expect(page).to have_content("No fields can be left empty")
+  end
  end
+end
