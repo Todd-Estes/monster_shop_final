@@ -8,6 +8,9 @@ RSpec.describe "Add Items to Cart" do
       @ogre = @megan.items.create!(name: 'Ogre', description: "I'm an Ogre!", price: 20, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
       @giant = @megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
       @hippo = @brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
+      discount_1 = @megan.discounts.create!(name: "5% Off Twenty or More", minimum_qty: 20, percent_off: 0.05)
+      discount_2 = @megan.discounts.create!(name: "20% Off Five or More", minimum_qty: 5, percent_off: 0.20)
+      discount_3 = @megan.discounts.create!(name: "50% Off Five or More", minimum_qty: 15, percent_off: 0.50)
     end
 
     it "I can add an item from the items show page" do
@@ -28,6 +31,8 @@ RSpec.describe "Add Items to Cart" do
       visit item_path(@giant)
 
       click_button 'Add to Cart'
+
+
 
       expect(page).to have_content("#{@giant.name} has been added to your cart!")
       expect(page).to have_content("Cart: 2")

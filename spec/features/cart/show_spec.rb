@@ -167,6 +167,66 @@ RSpec.describe 'Cart Show Page' do
         expect(page).to_not have_content("#{@hippo.name}")
         expect(page).to have_content("Cart: 0")
       end
+
+      it "can see discounted subtotals and messages when item quantity is increased or decreased" do
+        discount_1 = @megan.discounts.create!(name: "20% Off Two or More", minimum_qty: 2, percent_off: 0.20)
+        discount_2 = @megan.discounts.create!(name: "50% Off for Three", minimum_qty: 3, percent_off: 0.50)
+
+        visit item_path(@ogre)
+        click_button 'Add to Cart'
+
+        visit '/cart'
+
+        within "#item-#{@ogre.id}" do
+          expect(page).to have_link(@ogre.name)
+          expect(page).to have_content("Quantity: 1")
+          expect(page).to have_content("Subtotal: #{number_to_currency(@ogre.price * 1)}")
+          click_button('More of This!')
+
+          expect(page).to have_link(@ogre.name)
+          expect(page).to have_content("Quantity: 2")
+          expect(page).to have_content("Subtotal: #{(number_to_currency((@ogre.price * 2) - ((@ogre.price * 2) * (@ogre.highest_discount(2).percent_off))))}")
+          expect(page).to have_content("#{@ogre.highest_discount(2).name} discount included!")
+
+          click_button('More of This')
+
+          expect(page).to have_link(@ogre.name)
+          expect(page).to have_content("Quantity: 3")
+          expect(page).to have_content("Subtotal: #{(number_to_currency((@ogre.price * 3) - ((@ogre.price * 3) * (@ogre.highest_discount(3).percent_off))))}")
+          expect(page).to have_content("#{@ogre.highest_discount(3).name} discount included!")
+
+          click_button('Less of This')
+
+          expect(page).to have_link(@ogre.name)
+          expect(page).to have_content("Quantity: 2")
+          expect(page).to have_content("Subtotal: #{(number_to_currency((@ogre.price * 2) - ((@ogre.price * 2) * (@ogre.highest_discount(2).percent_off))))}")
+          expect(page).to have_content("#{@ogre.highest_discount(2).name} discount included!")
+        end
+       end
+
+      it "can add and remove from cart and see grand total reflect discounts" do
+        discount_1 = @megan.discounts.create!(name: "20% Off Two or More", minimum_qty: 2, percent_off: 0.20)
+        discount_2 = @megan.discounts.create!(name: "50% Off for Three", minimum_qty: 3, percent_off: 0.50)
+
+        visit item_path(@ogre)
+        click_button 'Add to Cart'
+
+        visit '/cart'
+
+        expect(page).to have_content("Total: #{number_to_currency(@ogre.price * 1)}")
+
+        within "#item-#{@ogre.id}" do
+          click_button('More of This!')
+        end
+
+        visit item_path(@giant)
+        click_button 'Add to Cart'
+
+        visit '/cart'
+
+
+        expect(page).to have_content("Grand Total: #{(number_to_currency((@giant.price + (@ogre.price * 2)) - ((@ogre.price * 2) * (@ogre.highest_discount(2).percent_off))))}")
+      end
+     end
     end
-  end
-end
+   end
