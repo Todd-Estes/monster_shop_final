@@ -168,7 +168,7 @@ RSpec.describe 'Cart Show Page' do
         expect(page).to have_content("Cart: 0")
       end
 
-      it "can see discounted subtotals and messages when item quantity is increased or decreased" do
+      it "can see discounted subtotals and messages and select greater discount discount when item quantity is increased or decreased" do
         discount_1 = @megan.discounts.create!(name: "20% Off Two or More", minimum_qty: 2, percent_off: 0.20)
         discount_2 = @megan.discounts.create!(name: "50% Off for Three", minimum_qty: 3, percent_off: 0.50)
 
