@@ -46,6 +46,7 @@ describe 'Destroy a Discount' do
       end
 
       expect(current_path).to eq('/merchant/discounts')
+      expect(page).to_not have_css("#discount-#{@discount_1.id}")
       expect(page).to have_no_content("#{@discount_1.name}")
       expect(page).to have_no_content("#{@discount_1.percent_off}")
 
@@ -53,6 +54,7 @@ describe 'Destroy a Discount' do
         click_button("Delete Discount")
       end
 
+      expect(page).to_not have_css("#discount-#{@discount_2.id}")
       expect(page).to have_no_content("#{@discount_2.name}")
       expect(page).to have_no_content("#{@discount_2.percent_off}")
     end

@@ -28,7 +28,6 @@ describe 'Discount Creation Form' do
 
         click_on 'Manage Discounts'
       end
-
     it 'can see a link to create new discounts' do
       expect(page).to have_link("Create New Discount")
     end
