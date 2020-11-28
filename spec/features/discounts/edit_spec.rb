@@ -81,7 +81,7 @@ describe 'Discount Edit Page' do
 
     fill_in 'Name', with: ''
     click_on 'Update Discount'
-    save_and_open_page
+    
    expect(current_path).to eq("/merchant/discounts/#{@discount_1.id}/edit")
    expect(page).to have_content("No fields can be left empty")
   end

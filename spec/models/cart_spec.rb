@@ -41,7 +41,9 @@ RSpec.describe Cart do
     end
 
     it '.grand_total' do
-      expect(@cart.grand_total).to eq(120)
+      discount_1 = @megan.discounts.create!(name: "20% Off Two or More", minimum_qty: 2, percent_off: 0.20)
+
+      expect(@cart.grand_total).to eq(100)
     end
 
     it '.count_of()' do
